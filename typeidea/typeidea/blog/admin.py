@@ -3,6 +3,8 @@ from django.urls import reverse
 from django.utils.html import format_html
 
 from .models import Post, Category, Tag
+from .adminforms import PostAdminForm
+from typeidea.custom_site import custom_site
 
 
 @admin.register(Category)
@@ -53,22 +55,42 @@ class PostAdmin(admin.ModelAdmin):
 
     actions_on_top = True
     actions_on_bottom = True
-
     # 编辑页面
     save_on_top = True
+    
+    form = PostAdminForm
 
-    fields = (
-        ('category', 'title'),
-        'desc',
-        'status',
-        'content',
-        'tag',
+    # fields = (
+    #     ('category', 'title'),
+    #     'desc',
+    #     'status',
+    #     'content',
+    #     'tag',
+    # )
+
+    fieldsets = (
+        ("基础配置", {
+            'description':'基础配置描述',
+            'fields': (
+                ('title', 'category'),
+                'status',
+            ),
+        }),
+
+        ('内容', {
+            'fields':('desc', 'content')
+        }),
+
+        ('额外信息', {
+            'classes': ('collapse'),
+            'fields': ('tag',),
+        })
     )
 
     def operater(self, obj):
         return format_html(
             '<a href="{}">编辑</a>',
-            reverse('admin:blog_post_change', args=(obj.id,))
+            reverse('cus_admin:blog_post_change', args=(obj.id,))
         )
     operater.short_description = '操作'
 
@@ -85,3 +107,11 @@ class PostAdmin(admin.ModelAdmin):
         queryset = super(PostAdmin, self).get_queryset(request)
         return queryset.filter(owner = request.user)
 
+    # class Media:
+    #     # 我们可以通过定义media类来往页面上增加想要添加的JS以及CSS资源
+    #     css = {
+    #         'all': (
+                
+    #         )
+    #     }
+    #     js = ('')
