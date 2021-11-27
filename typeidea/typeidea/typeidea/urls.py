@@ -21,8 +21,8 @@ from .custom_site import custom_site
 
 
 urlpatterns = [
-    path('admin/', custom_site.urls),
-    path('super_admin/', admin.site.urls)
-    # url(r'^super_admin/', admin.site.urls),
-    # url(r'^admin/', custom_site.urls),
+    # path(r'^admin/', custom_site.urls),
+    # path(r'^super_admin/', admin.site.urls),
+    url(r'^super_admin/', admin.site.urls),
+    url(r'^admin/', custom_site.urls),
 ]
