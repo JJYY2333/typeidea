@@ -10,6 +10,7 @@ class Link(models.Model):
         (STATUS_DELETE, '删除'),
     )
 
+    name = '友链'
     title = models.CharField(max_length=50, verbose_name = "标题")
     href = models.URLField(max_length = 200, verbose_name = "链接")
     status = models.PositiveIntegerField(default=STATUS_NORMAL, choices=STATUS_ITEMS,
@@ -18,6 +19,9 @@ class Link(models.Model):
                                         verbose_name="权重", help_text= "权重高展示顺序靠前")
     owner = models.ForeignKey(User, verbose_name="作者", on_delete=models.CASCADE)
     created_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         verbose_name = verbose_name_plural ='友链'
@@ -36,7 +40,7 @@ class SideBar(models.Model):
         (3, '最热文章'),
         (4, '最近评论'),
     )
-
+    name = '侧边栏'
     title = models.CharField(max_length=50, verbose_name = "标题")
     display_type = models.PositiveIntegerField(default=1, choices=SIDE_TYPE,
                                                 verbose_name="展示类型")
@@ -47,5 +51,8 @@ class SideBar(models.Model):
     owner = models.ForeignKey(User, verbose_name="作者", on_delete=models.CASCADE)
     created_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
 
+    def __str__(self):
+        return self.name
+    
     class Meta:
         verbose_name = verbose_name_plural = '侧边栏'

@@ -10,6 +10,7 @@ class Comment(models.Model):
         (STATUS_DELETE, '删除'),
     )
     
+    name = '评论'
     target = models.ForeignKey(Post, verbose_name="评论目标", on_delete=models.CASCADE)
     content = models.CharField(max_length=2000, verbose_name="内容")
     nickname = models.CharField(max_length=50, verbose_name="昵称")
@@ -18,6 +19,9 @@ class Comment(models.Model):
     status = models.PositiveIntegerField(default=STATUS_NORMAL, choices=STATUS_ITEMS,
                                         verbose_name="状态")
     created_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
+    
+    def __str__(self):
+        return self.name
 
     class Meta:
         verbose_name = verbose_name_plural ='评论'
