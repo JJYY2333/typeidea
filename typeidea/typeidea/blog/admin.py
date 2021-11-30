@@ -32,8 +32,8 @@ class CategoryAdmin(BaseOwnerAdmin):
 
 @admin.register(Tag, site=custom_site)
 class TagAdmin(BaseOwnerAdmin):
-    list_display = ('name', 'status', 'created_time')
-    fields = ('name', 'status')
+    list_display = ('id','name', 'status', 'created_time')
+    fields = ('id', 'name', 'status')
 
 
 class CategoryOwnerFilter(admin.SimpleListFilter):
