@@ -19,7 +19,7 @@ from django.conf.urls import url
 
 from blog.views import (
     post_list, post_detail, PostDetailView,
-    IndexView, CategoryView, TagView
+    IndexView, CategoryView, TagView, test_index
 )
 from config.views import links
 from .custom_site import custom_site
@@ -39,4 +39,5 @@ urlpatterns = [
     url(r'^links/$', links, name='links'),
     url(r'^super_admin/', admin.site.urls, name='super-admin'),
     url(r'^admin/', custom_site.urls, name='admin'),
+    url(r'^test/', test_index)
 ]

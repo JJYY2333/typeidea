@@ -28,6 +28,9 @@ def post_list(request, category_id=None, tag_id = None):
     return render(request, 'blog/list.html', context=context)
 
 
+def test_index(request):
+    return render(request, 'blog/index.html')
+
 def post_detail(request, post_id):
     try:
         post = Post.objects.get(id=post_id)
