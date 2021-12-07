@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
@@ -115,3 +116,24 @@ class PostDetailView(CommonViewMixin, DetailView):
     pk_url_kwarg = 'post_id'
 
 
+class SearchView(IndexView):
+    def get_context_data(self):
+        context = super().get_context_data()
+        context.update({
+            'keyword': self.request.GET.get('keyword', '')
+        })
+        return context
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        key_word = self.request.GET.get('keyword')
+        if not key_word:
+            return queryset
+        return queryset.filter(Q(title__icontains=key_word) |Q(desc__icontains=key_word))
+        
+
+class AuthorView(IndexView):
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        author_id = self.kwargs.get('owner_id')
+        return queryset.filter(owner_id=author_id)
